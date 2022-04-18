@@ -5,20 +5,19 @@ import flask
 
 
 def create_app(test_config=None):
-    print("ok")
+
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True, static_folder="static/")
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+    app = Flask(__name__, instance_relative_config=False)
 
     if test_config is None:
         # Load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
+
+        app.config.from_pyfile('config.py', silent=False)
         app.logger.info('load test config is None')
-        app.logger.info(app.root_path)
+        app.logger.info("root_path %s", app.root_path)
         app.logger.info(app.config)
+
+
     else:
         # Load the test config if passed in
         app.logger.info('load from test config')
